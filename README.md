@@ -19,6 +19,9 @@ Welcome to Calculator Web App! This repository hosts an interactive and visually
 ## CONTRIBUTIONS
 Contributions are always welcome! If you encounter any bugs, have suggestions for improvements, or want to add new features, please feel free to submit a pull request.
 
+## LICENSE
+This Calculator Web App is licensed under the [MIT License](LICENSE).
+
 ## ACKNOWLEDGEMENTS
 We would like to express our gratitude to the open-source community and all the contributors who have made this project possible.
 
