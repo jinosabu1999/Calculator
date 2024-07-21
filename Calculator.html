@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--background-color);
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            transition: background 0.3s;
+            position: relative;
+        }
+        :root {
+            --background-color: #f0f0f0;
+            --button-background: #444;
+            --button-hover: #555;
+            --operator-background: #ff9500;
+            --operator-hover: #ffb74d;
+            --clear-background: #e53935;
+            --clear-hover: #ef5350;
+        }
+        [data-theme="dark"] {
+            --background-color: #333;
+            --button-background: #666;
+            --button-hover: #777;
+            --operator-background: #ffb74d;
+            --operator-hover: #ffc477;
+            --clear-background: #ef5350;
+            --clear-hover: #f77c7c;
+        }
+        .calculator {
+            background: var(--background-color);
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            box-sizing: border-box;
+        }
+        .display {
+            background: #222;
+            color: #fff;
+            font-size: 2em;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: right;
+            margin-bottom: 10px;
+            width: calc(100% - 20px);
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .button {
+            background: var(--button-background);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.5em;
+            padding: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: var(--button-hover);
+        }
+        .button.operator {
+            background: var(--operator-background);
+        }
+        .button.operator:hover {
+            background: var(--operator-hover);
+        }
+        .button.clear {
+            background: var(--clear-background);
+        }
+        .button.clear:hover {
+            background: var(--clear-hover);
+        }
+        .toggle-theme {
+            background: none;
+            border: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #444;
+            transition: color 0.3s;
+        }
+        [data-theme="dark"] .toggle-theme {
+            color: #fff;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <button class="toggle-theme" onclick="toggleTheme()">
+        <span id="theme-icon">🌞</span>
+    </button>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons">
+            <button class="button clear" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="backspace()">⌫</button>
+            <button class="button operator" onclick="appendToDisplay('/')">/</button>
+            <button class="button operator" onclick="appendToDisplay('*')">*</button>
+            <button class="button" onclick="appendToDisplay('7')">7</button>
+            <button class="button" onclick="appendToDisplay('8')">8</button>
+            <button class="button" onclick="appendToDisplay('9')">9</button>
+            <button class="button operator" onclick="appendToDisplay('-')">-</button>
+            <button class="button" onclick="appendToDisplay('4')">4</button>
+            <button class="button" onclick="appendToDisplay('5')">5</button>
+            <button class="button" onclick="appendToDisplay('6')">6</button>
+            <button class="button operator" onclick="appendToDisplay('+')">+</button>
+            <button class="button" onclick="appendToDisplay('1')">1</button>
+            <button class="button" onclick="appendToDisplay('2')">2</button>
+            <button class="button" onclick="appendToDisplay('3')">3</button>
+            <button class="button" onclick="appendToDisplay('0')">0</button>
+            <button class="button" onclick="appendToDisplay('.')">.</button>
+            <button class="button" onclick="appendToDisplay('(')">(</button>
+            <button class="button" onclick="appendToDisplay(')')">)</button>
+            <button class="button operator" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+            navigator.vibrate(50); // Vibration feedback
+        }
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            display.value += value;
+            navigator.vibrate(50); // Vibration feedback
+        }
+
+        function backspace() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+            navigator.vibrate(50); // Vibration feedback
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                const result = eval(display.value);
+                display.value = result;
+            } catch {
+                display.value = 'Error';
+                navigator.vibrate(100); // Vibration feedback for error
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            const themeIcon = document.getElementById('theme-icon');
+            themeIcon.textContent = newTheme === 'light' ? '🌞' : '🌜';
+            navigator.vibrate(50); // Vibration feedback
+        }
+    </script>
+</body>
+</html>
