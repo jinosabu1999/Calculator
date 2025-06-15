@@ -76,11 +76,19 @@ function updateHistoryDisplay() {
     calculationHistory.forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry;
+        listItem.setAttribute('role', 'button');
+        listItem.setAttribute('tabindex', '0');
         listItem.addEventListener('click', () => {
             const display = document.getElementById('display');
             const expressionPart = entry.split('=')[0].trim();
             display.value = expressionPart;
             navigator.vibrate(30);
+        });
+        listItem.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault(); // Prevent default space scroll
+                this.click(); // Trigger the existing click handler
+            }
         });
         historyList.appendChild(listItem);
     });

@@ -1,0 +1,279 @@
+body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color); /* Updated variable name */
+            margin: 0;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            transition: background-color 0.3s ease; /* Smoother transition */
+            position: relative; /* For theme toggle positioning */
+        }
+
+        /* CSS Variables */
+        :root {
+            /* Light Theme (default) */
+            --bg-color: #F0F2F5; /* Light grey background */
+            --calculator-bg: #FFFFFF; /* White calculator body */
+            --display-bg: #E8E8E8; /* Light grey display */
+            --display-text-color: #333333; /* Dark text for display */
+            --button-bg: #F0F0F0; /* Light grey buttons */
+            --button-text-color: #333333; /* Dark text for buttons */
+            --button-hover-bg: #E0E0E0; /* Slightly darker grey on hover */
+            --operator-bg: #2196F3; /* Modern blue for operators */
+            --operator-text-color: #FFFFFF;
+            --operator-hover-bg: #1976D2; /* Darker blue on hover */
+            --clear-bg: #E91E63; /* Modern pink/red for clear */
+            --clear-text-color: #FFFFFF;
+            --clear-hover-bg: #C2185B; /* Darker pink/red on hover */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Softer shadow */
+            --theme-icon-color: #333333;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1B1E; /* Very dark grey/black */
+            --calculator-bg: #222427; /* Dark grey calculator body */
+            --display-bg: #2A2D30; /* Slightly lighter dark grey display */
+            --display-text-color: #EAEAEA; /* Light text for display */
+            --button-bg: #3B3E43; /* Medium dark grey buttons */
+            --button-text-color: #EAEAEA; /* Light text for buttons */
+            --button-hover-bg: #4C4F54; /* Slightly lighter grey on hover */
+            --operator-bg: #2979FF; /* Vibrant blue for operators in dark mode */
+            --operator-text-color: #FFFFFF;
+            --operator-hover-bg: #1C54B2; /* Darker blue on hover */
+            --clear-bg: #FF3B30; /* Vibrant red for clear in dark mode */
+            --clear-text-color: #FFFFFF;
+            --clear-hover-bg: #D92C23; /* Darker red on hover */
+            --shadow-color: rgba(0, 0, 0, 0.3); /* Shadow more visible in dark mode */
+            --theme-icon-color: #EAEAEA;
+        }
+
+        /* Calculator Layout & General Styles */
+        .calculator {
+            background-color: var(--calculator-bg);
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0 8px 25px var(--shadow-color); /* Modern subtle shadow */
+            padding: 25px; /* Increased padding */
+            width: 100%;
+            max-width: 340px; /* Slightly adjusted max-width */
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Display Styles */
+        .display {
+            background-color: var(--display-bg);
+            color: var(--display-text-color);
+            font-size: 2.5em; /* Slightly larger font for display */
+            font-weight: 300; /* Lighter font weight for modern look */
+            border: none;
+            border-radius: 10px;
+            padding: 15px 20px; /* Increased padding */
+            text-align: right;
+            margin-bottom: 20px; /* Increased margin */
+            width: 100%; /* Adjusted to use 100% of parent with box-sizing */
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Button Grid */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px; /* Increased gap for better spacing */
+        }
+
+        /* General Button Styles */
+        .button {
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 10px; /* Consistent border-radius */
+            font-size: 1.6em; /* Adjusted font size */
+            font-weight: 500;
+            padding: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease; /* Added transform for click effect */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for buttons */
+            display: flex; /* For centering content if needed */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background-color: var(--button-hover-bg);
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+
+        .button:active {
+            transform: translateY(1px); /* Click effect */
+            box-shadow: none; /* Remove shadow on click */
+        }
+
+        /* Operator Button Styles */
+        .button.operator {
+            background-color: var(--operator-bg);
+            color: var(--operator-text-color);
+        }
+        .button.operator:hover {
+            background-color: var(--operator-hover-bg);
+        }
+
+        /* Clear Button Styles */
+        .button.clear {
+            background-color: var(--clear-bg);
+            color: var(--clear-text-color);
+            /* grid-column: span 2; Optional: if C should span 2 columns */
+        }
+        .button.clear:hover {
+            background-color: var(--clear-hover-bg);
+        }
+
+        /* Theme Toggle Button */
+        .toggle-theme {
+            background: none;
+            border: 1px solid var(--theme-icon-color); /* Subtle border */
+            border-radius: 50%; /* Circular button */
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.2em; /* Adjusted size */
+            color: var(--theme-icon-color);
+            transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            width: 40px; /* Fixed size */
+            height: 40px; /* Fixed size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .toggle-theme:hover {
+            transform: scale(1.1); /* Slight scale on hover */
+        }
+
+        [data-theme="dark"] .toggle-theme {
+            color: var(--theme-icon-color);
+            border-color: var(--theme-icon-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            body {
+                flex-direction: column;
+            }
+            .calculator, .history-panel-container { /* Apply similar constraints to history panel */
+                padding: 20px;
+                max-width: none; /* Allow full width */
+                width: calc(100% - 20px); /* Account for 10px horizontal margins */
+                margin: 10px auto; /* Centering for history panel */
+                border-radius: 15px; /* Slightly less border radius */
+            }
+            .calculator {
+                /* width: calc(100% - 20px); remove width from here as it is already defined above */
+                margin: 10px; /* Add some margin on small screens */
+            }
+            .display {
+                font-size: 2em; /* Reduce display font size */
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .buttons {
+                gap: 10px; /* Reduce gap between buttons */
+            }
+            .button {
+                font-size: 1.3em; /* Reduce button font size */
+                padding: 16px; /* Adjust padding */
+            }
+            .toggle-theme {
+                top: 10px;
+                right: 10px;
+                font-size: 1em;
+                width: 35px;
+                height: 35px;
+            }
+            .history-panel-container h3 {
+                font-size: 1.3em;
+            }
+            .history-panel-container #history-list li {
+                font-size: 0.9em;
+                padding: 6px 8px;
+            }
+            .history-panel-container #clear-history-button {
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+        }
+
+        /* History Panel Styles */
+        .history-panel-container { /* New container for history panel for consistent max-width and centering */
+            background-color: var(--calculator-bg); /* Match calculator background */
+            border-radius: 20px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            padding: 20px;
+            width: 100%;
+            max-width: 340px; /* Same as calculator */
+            box-sizing: border-box;
+            margin: 20px auto; /* Spacing below calculator and centered */
+            color: var(--display-text-color); /* Use display text color for readability */
+        }
+
+        .history-panel-container h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+
+        #history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+            max-height: 150px; /* Limit height and make scrollable */
+            overflow-y: auto;
+            border: 1px solid var(--display-bg); /* Subtle border */
+            border-radius: 10px;
+        }
+
+        #history-list li {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--display-bg); /* Separator */
+            font-size: 0.95em;
+            word-wrap: break-word; /* Wrap long expressions */
+        }
+
+        #history-list li:last-child {
+            border-bottom: none;
+        }
+
+        #clear-history-button {
+            background-color: var(--clear-bg); /* Use clear button styling */
+            color: var(--clear-text-color);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s ease;
+        }
+
+        #clear-history-button:hover {
+            background-color: var(--clear-hover-bg);
+        }
+
+/* Enhanced Focus Visibility */
+.button:focus,
+.toggle-theme:focus,
+#clear-history-button:focus,
+.history-panel-container #history-list li:focus { /* Added focus for history list items */
+    outline: 3px solid var(--operator-hover-bg); /* Using a slightly darker operator color */
+    outline-offset: 2px;
+    box-shadow: 0 0 8px var(--operator-hover-bg); /* Optional: add a glow effect */
+}
+
+/* Ensure high contrast for focus on display if it were active */
+.display:focus {
+    outline: 3px solid var(--operator-hover-bg);
+    outline-offset: 2px;
+}
