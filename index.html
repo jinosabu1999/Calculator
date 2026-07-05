@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>Nova Calc — Modern Calculator</title>
+<meta name="theme-color" content="#241D19">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-ui: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    /* ===== Light Theme — "Mocha & Amber" ===== */
+    --bg-1: #F3E9DC;
+    --bg-2: #ECD9C6;
+    --surface: #FFFDFA;
+    --surface-alt: #FBF3EA;
+    --surface-glass: rgba(255,255,255,0.55);
+    --text: #2B2118;
+    --text-soft: #7A6A5C;
+    --border: rgba(43,33,24,0.08);
+
+    --key-bg: #FFFFFF;
+    --key-text: #3A2E24;
+    --key-hover: #F1E6D8;
+    --key-shadow: rgba(43,33,24,0.10);
+
+    --accent: #E8734A;      /* terracotta */
+    --accent-hover: #D45F37;
+    --accent-text: #FFFFFF;
+
+    --accent-2: #2E8B74;    /* emerald */
+    --accent-2-hover: #24705D;
+    --accent-2-text: #FFFFFF;
+
+    --accent-3: #9B5DE5;    /* plum/violet for scientific */
+    --accent-3-hover: #8347CC;
+    --accent-3-text: #FFFFFF;
+
+    --danger: #D64550;
+    --danger-hover: #B5333D;
+    --danger-text: #FFFFFF;
+
+    --shadow-lg: 0 20px 45px rgba(43,33,24,0.16);
+    --shadow-md: 0 8px 20px rgba(43,33,24,0.10);
+    --ring: rgba(232,115,74,0.35);
+  }
+
+  [data-theme="dark"]{
+    --bg-1: #17120F;
+    --bg-2: #1F1712;
+    --surface: #241D19;
+    --surface-alt: #2C2420;
+    --surface-glass: rgba(36,29,25,0.55);
+    --text: #F3EAE0;
+    --text-soft: #C9B8A8;
+    --border: rgba(255,255,255,0.07);
+
+    --key-bg: #2C2420;
+    --key-text: #F3EAE0;
+    --key-hover: #382E28;
+    --key-shadow: rgba(0,0,0,0.35);
+
+    --accent: #FF8A5B;
+    --accent-hover: #FF7043;
+    --accent-text: #1C1714;
+
+    --accent-2: #3ECF8E;
+    --accent-2-hover: #2FB578;
+    --accent-2-text: #10231A;
+
+    --accent-3: #C792FF;
+    --accent-3-hover: #B074F5;
+    --accent-3-text: #241033;
+
+    --danger: #FF6B6B;
+    --danger-hover: #E14A56;
+    --danger-text: #1C1714;
+
+    --shadow-lg: 0 25px 60px rgba(0,0,0,0.55);
+    --shadow-md: 0 10px 25px rgba(0,0,0,0.4);
+    --ring: rgba(255,138,91,0.35);
+  }
+
+  /* ===== Theme: Sage & Clay ===== */
+  [data-palette="sage"]{
+    --bg-1: #E9EDE1;
+    --bg-2: #DCE4CD;
+    --surface: #FBFCF8;
+    --surface-alt: #F1F4EA;
+    --surface-glass: rgba(255,255,255,0.55);
+    --text: #2B3324;
+    --text-soft: #71806A;
+    --border: rgba(43,51,36,0.08);
+    --key-bg: #FFFFFF;
+    --key-text: #384631;
+    --key-hover: #E6EBDC;
+    --key-shadow: rgba(43,51,36,0.10);
+    --accent: #B26C4C;
+    --accent-hover: #9C5A3D;
+    --accent-text: #FFFFFF;
+    --accent-2: #5C8752;
+    --accent-2-hover: #4A6F41;
+    --accent-2-text: #FFFFFF;
+    --accent-3: #7A8B99;
+    --accent-3-hover: #64747F;
+    --accent-3-text: #FFFFFF;
+    --danger: #C4573F;
+    --danger-hover: #A54732;
+    --danger-text: #FFFFFF;
+    --shadow-lg: 0 20px 45px rgba(43,51,36,0.16);
+    --shadow-md: 0 8px 20px rgba(43,51,36,0.10);
+  }
+  [data-palette="sage"][data-theme="dark"]{
+    --bg-1: #12140F;
+    --bg-2: #191C13;
+    --surface: #1E2217;
+    --surface-alt: #262B1D;
+    --surface-glass: rgba(30,34,23,0.55);
+    --text: #E9EDE1;
+    --text-soft: #A8B69C;
+    --border: rgba(255,255,255,0.07);
+    --key-bg: #262B1D;
+    --key-text: #E9EDE1;
+    --key-hover: #313828;
+    --key-shadow: rgba(0,0,0,0.35);
+    --accent: #E08A5F;
+    --accent-hover: #D2764A;
+    --accent-text: #1A1410;
+    --accent-2: #86C177;
+    --accent-2-hover: #6FAE60;
+    --accent-2-text: #0E1A0C;
+    --accent-3: #9DB3C2;
+    --accent-3-hover: #85A0B1;
+    --accent-3-text: #101820;
+    --danger: #E2765A;
+    --danger-hover: #CC6347;
+    --danger-text: #1A1410;
+    --shadow-lg: 0 25px 60px rgba(0,0,0,0.55);
+    --shadow-md: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  /* ===== Theme: Rosewood ===== */
+  [data-palette="rosewood"]{
+    --bg-1: #F3E4E2;
+    --bg-2: #E9CFCB;
+    --surface: #FFF9F8;
+    --surface-alt: #FBEEEC;
+    --surface-glass: rgba(255,255,255,0.55);
+    --text: #331F1D;
+    --text-soft: #8A6764;
+    --border: rgba(51,31,29,0.08);
+    --key-bg: #FFFFFF;
+    --key-text: #3E2624;
+    --key-hover: #F5E2DF;
+    --key-shadow: rgba(51,31,29,0.10);
+    --accent: #B5495B;
+    --accent-hover: #9C3B4C;
+    --accent-text: #FFFFFF;
+    --accent-2: #4E8577;
+    --accent-2-hover: #3F6D61;
+    --accent-2-text: #FFFFFF;
+    --accent-3: #A6698A;
+    --accent-3-hover: #8E5474;
+    --accent-3-text: #FFFFFF;
+    --danger: #A93E3E;
+    --danger-hover: #8E3232;
+    --danger-text: #FFFFFF;
+    --shadow-lg: 0 20px 45px rgba(51,31,29,0.16);
+    --shadow-md: 0 8px 20px rgba(51,31,29,0.10);
+  }
+  [data-palette="rosewood"][data-theme="dark"]{
+    --bg-1: #170F10;
+    --bg-2: #1F1415;
+    --surface: #241819;
+    --surface-alt: #2C1E1F;
+    --surface-glass: rgba(36,24,25,0.55);
+    --text: #F3E4E2;
+    --text-soft: #C9A8A5;
+    --border: rgba(255,255,255,0.07);
+    --key-bg: #2C1E1F;
+    --key-text: #F3E4E2;
+    --key-hover: #382628;
+    --key-shadow: rgba(0,0,0,0.35);
+    --accent: #F0778A;
+    --accent-hover: #E36179;
+    --accent-text: #1F1213;
+    --accent-2: #64C2AC;
+    --accent-2-hover: #4EAC95;
+    --accent-2-text: #0C201B;
+    --accent-3: #DA9DC0;
+    --accent-3-hover: #CA84AD;
+    --accent-3-text: #24101B;
+    --danger: #F0716F;
+    --danger-hover: #DD5B59;
+    --danger-text: #1F1213;
+    --shadow-lg: 0 25px 60px rgba(0,0,0,0.55);
+    --shadow-md: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  /* ===== Theme: Midnight Plum ===== */
+  [data-palette="plum"]{
+    --bg-1: #EAE4F0;
+    --bg-2: #DCD2E9;
+    --surface: #FBFAFD;
+    --surface-alt: #F2EDF8;
+    --surface-glass: rgba(255,255,255,0.55);
+    --text: #251E33;
+    --text-soft: #776A8C;
+    --border: rgba(37,30,51,0.08);
+    --key-bg: #FFFFFF;
+    --key-text: #2E2540;
+    --key-hover: #E9E1F4;
+    --key-shadow: rgba(37,30,51,0.10);
+    --accent: #7B4FB0;
+    --accent-hover: #663F97;
+    --accent-text: #FFFFFF;
+    --accent-2: #2E8B87;
+    --accent-2-hover: #24706D;
+    --accent-2-text: #FFFFFF;
+    --accent-3: #C05C8F;
+    --accent-3-hover: #A54A78;
+    --accent-3-text: #FFFFFF;
+    --danger: #B4405C;
+    --danger-hover: #98334C;
+    --danger-text: #FFFFFF;
+    --shadow-lg: 0 20px 45px rgba(37,30,51,0.16);
+    --shadow-md: 0 8px 20px rgba(37,30,51,0.10);
+  }
+  [data-palette="plum"][data-theme="dark"]{
+    --bg-1: #100B1A;
+    --bg-2: #171023;
+    --surface: #1D1529;
+    --surface-alt: #251B33;
+    --surface-glass: rgba(29,21,41,0.55);
+    --text: #EAE4F0;
+    --text-soft: #B8A9CC;
+    --border: rgba(255,255,255,0.07);
+    --key-bg: #251B33;
+    --key-text: #EAE4F0;
+    --key-hover: #31243F;
+    --key-shadow: rgba(0,0,0,0.35);
+    --accent: #A876E0;
+    --accent-hover: #9761D4;
+    --accent-text: #180F24;
+    --accent-2: #4FCFC4;
+    --accent-2-hover: #3AB9AD;
+    --accent-2-text: #082220;
+    --accent-3: #E88CB8;
+    --accent-3-hover: #DD73A6;
+    --accent-3-text: #23101B;
+    --danger: #E0708C;
+    --danger-hover: #CE5876;
+    --danger-text: #180F24;
+    --shadow-lg: 0 25px 60px rgba(0,0,0,0.55);
+    --shadow-md: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html,body{ height:100%; }
+
+  body{
+    margin:0;
+    font-family: var(--font-ui);
+    height: 100vh;
+    height: 100dvh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background:
+      radial-gradient(circle at 15% 10%, var(--bg-2), transparent 55%),
+      radial-gradient(circle at 85% 90%, var(--bg-2), transparent 55%),
+      var(--bg-1);
+    color: var(--text);
+    transition: background-color .4s ease, color .4s ease;
+    overflow: hidden;
+  }
+
+  .app{
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    max-height: 840px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+  }
+
+  /* ===== Top bar ===== */
+  .top-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 2px 4px;
+    flex-shrink: 0;
+  }
+  .brand{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:1.05em; letter-spacing:.2px;
+  }
+  .brand .dot{
+    width:9px; height:9px; border-radius:50%;
+    background: linear-gradient(135deg,var(--accent),var(--accent-3));
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .top-actions{ display:flex; gap:8px; }
+  .icon-btn{
+    width:38px; height:38px; border-radius:12px;
+    border: 1px solid var(--border);
+    background: var(--surface-glass);
+    backdrop-filter: blur(10px);
+    color: var(--text);
+    font-size: 1.05em;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow: var(--shadow-md);
+  }
+  .icon-btn svg{ width:18px; height:18px; }
+  .icon-btn:hover{ transform: translateY(-2px); }
+  .icon-btn:active{ transform: translateY(0) scale(.94); }
+
+  /* ===== Bottom Floating Nav (iOS-style) ===== */
+  .bottom-nav{
+    display:flex;
+    gap: 6px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 7px;
+    box-shadow: var(--shadow-lg);
+    flex-shrink: 0;
+  }
+  .nav-tab{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 2px;
+    border:none;
+    background: transparent;
+    color: var(--text-soft);
+    padding: 8px 6px;
+    border-radius: 18px;
+    cursor:pointer;
+    font-family: var(--font-ui);
+    transition: background .3s cubic-bezier(.4,0,.2,1), color .3s ease, transform .2s ease, box-shadow .3s ease;
+  }
+  .nav-tab svg{
+    width: 20px; height: 20px;
+    display:block;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .nav-tab .nav-label{
+    font-size: .68em;
+    font-weight: 600;
+    letter-spacing: .2px;
+  }
+  .nav-tab.active{
+    background: linear-gradient(135deg, var(--accent), var(--accent-3));
+    color: #FFFFFF;
+    box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    transform: translateY(-2px);
+  }
+  .nav-tab.active svg{ transform: scale(1.12); }
+  .nav-tab:active{ transform: scale(.94); }
+
+  /* ===== Card / Panels ===== */
+  .card{
+    background: var(--surface);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    padding: 16px;
+    border: 1px solid var(--border);
+    transition: background .4s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .panel{ display:none; flex-direction:column; gap:10px; flex:1; min-height:0; }
+  .panel.active{ display:flex; }
+
+  /* mode switch (standard/scientific) */
+  .mode-switch{
+    display:flex; gap:6px;
+    background: var(--surface-alt);
+    padding:4px; border-radius: 12px;
+    flex-shrink: 0;
+  }
+  .mode-btn{
+    flex:1; border:none; background:transparent; cursor:pointer;
+    padding:7px 6px; border-radius:9px; font-family:var(--font-ui);
+    font-size:.8em; font-weight:500; color:var(--text-soft);
+    transition:.2s ease;
+  }
+  .mode-btn.active{
+    background: var(--accent-3);
+    color: var(--accent-3-text);
+    font-weight:600;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ===== Calc toolbar (badges + undo/redo/copy) — sits above the display ===== */
+  .calc-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 0 2px;
+    min-height: 26px;
+  }
+  .calc-toolbar-badges{
+    display:flex;
+    gap:6px;
+    align-items:center;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .calc-toolbar-tools{
+    display:flex;
+    gap:6px;
+    flex-shrink: 0;
+  }
+  .tool-btn{
+    width:28px; height:28px; border-radius:9px;
+    border:none; background: var(--surface-alt); color: var(--text-soft);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition: all .15s ease;
+    flex-shrink: 0;
+  }
+  .tool-btn svg{ width:14px; height:14px; }
+  .tool-btn:hover{ color: var(--text); background: var(--key-hover); }
+  .tool-btn:active{ transform: scale(.88); }
+  .tool-btn:disabled{ opacity:.3; cursor:default; }
+  .tool-btn:disabled:hover{ background: var(--surface-alt); color: var(--text-soft); }
+
+  /* ===== Display ===== */
+  .display-wrap{
+    background: var(--surface-alt);
+    border-radius: 16px;
+    padding: 12px 16px 10px;
+    text-align:right;
+    flex-shrink: 0;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    gap:4px;
+    position:relative;
+    overflow:hidden;
+  }
+  .expression{
+    font-family: var(--font-mono);
+    font-size: clamp(.75em, 2.4vh, .95em);
+    color: var(--text-soft);
+    min-height: 1.2em;
+    white-space: nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-right: 4px;
+  }
+  .expression::-webkit-scrollbar{ display:none; }
+  .display{
+    font-family: var(--font-mono);
+    font-size: clamp(1.6em, 6.4vh, 2.4em);
+    font-weight: 500;
+    color: var(--text);
+    white-space:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+    line-height: 1.15;
+  }
+  .display::-webkit-scrollbar{ display:none; }
+  .badge{
+    font-size:.62em; font-weight:600; letter-spacing:.5px;
+    padding: 4px 7px; border-radius:7px;
+    background: var(--accent); color:var(--accent-text);
+    opacity:0; transform: translateY(-3px) scale(.92);
+    max-width:0; padding-left:0; padding-right:0;
+    overflow:hidden; white-space:nowrap;
+    transition: all .25s ease;
+  }
+  .badge.show{
+    opacity:1; transform:translateY(0) scale(1);
+    max-width:90px; padding:4px 7px;
+  }
+  .badge.deg-badge{ background: var(--accent-2); color: var(--accent-2-text); }
+
+
+  /* ===== Memory row (multi-slot M1-M5) ===== */
+  .memory-row{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .mem-slot{
+    border:none; border-radius:10px; cursor:pointer;
+    background: var(--surface-alt); color: var(--text-soft);
+    font-family: var(--font-ui);
+    padding: 6px 3px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap: 1px;
+    transition: all .15s ease;
+    box-shadow: inset 0 0 0 1px transparent;
+    min-width: 0;
+  }
+  .mem-slot .mem-slot-label{
+    font-size:.7em; font-weight:700;
+    max-width: 100%;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .mem-slot .mem-slot-value{
+    font-size:.56em; font-family: var(--font-mono); opacity:.85;
+    max-width: 100%;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    min-height: .9em;
+  }
+  .mem-slot:hover{ background: var(--key-hover); color:var(--text); }
+  .mem-slot:active{ transform: scale(.93); }
+  .mem-slot.filled{
+    color: var(--accent-2);
+    box-shadow: inset 0 0 0 1.5px var(--accent-2);
+  }
+
+  /* ===== Keypad wrapper (fills remaining space, no scroll) ===== */
+  .keypad{
+    flex: 1;
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  /* ===== Scientific grid ===== */
+  .sci-grid{
+    flex: 4;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+    min-height: 0;
+  }
+  .sci-grid.hidden{ display:none; }
+  .sci-btn{
+    border:none; border-radius: 12px; cursor:pointer;
+    background: var(--surface-alt); color: var(--accent-3);
+    font-family: var(--font-mono); font-size: clamp(.75em, 2.6vh, .95em); font-weight:600;
+    padding: 2px;
+    transition: all .15s ease;
+    box-shadow: 0 2px 6px var(--key-shadow);
+  }
+  .sci-btn:hover{ background: var(--key-hover); transform: translateY(-1px); }
+  .sci-btn:active{ transform: translateY(1px) scale(.96); }
+  .sci-btn.on{ background: var(--accent-3); color: var(--accent-3-text); }
+
+  /* ===== Button grid ===== */
+  .buttons{
+    flex: 6;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 8px;
+    min-height: 0;
+  }
+  .btn{
+    border:none;
+    border-radius: 14px;
+    background: var(--key-bg);
+    color: var(--key-text);
+    font-family: var(--font-ui);
+    font-size: clamp(1em, 3.6vh, 1.35em);
+    font-weight: 500;
+    padding: 4px;
+    cursor:pointer;
+    box-shadow: 0 3px 8px var(--key-shadow);
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
+    user-select:none;
+    position:relative;
+    overflow:hidden;
+  }
+  .btn:hover{ background: var(--key-hover); transform: translateY(-2px); }
+  .btn:active{ transform: translateY(1px) scale(.96); box-shadow:none; }
+
+  .btn.op{ background: var(--accent); color: var(--accent-text); font-weight:600; }
+  .btn.op:hover{ background: var(--accent-hover); }
+
+  .btn.equal{
+    background: var(--accent-2); color: var(--accent-2-text); font-weight:700;
+    grid-column: 1 / -1;
+    font-size: clamp(1.1em, 3.8vh, 1.5em);
+  }
+  .btn.equal:hover{ background: var(--accent-2-hover); }
+
+  .btn.clear{ background: var(--danger); color: var(--danger-text); font-weight:600; }
+  .btn.clear:hover{ background: var(--danger-hover); }
+
+  .btn.ghost{ background: var(--surface-alt); color: var(--text-soft); font-weight:600; }
+
+  .btn.ans{
+    background: var(--surface-alt);
+    color: var(--accent-3);
+    font-weight:700;
+    font-size: clamp(.85em, 3vh, 1.05em);
+  }
+
+  /* ripple */
+  .ripple{
+    position:absolute; border-radius:50%;
+    background: rgba(255,255,255,.5);
+    transform: scale(0); animation: ripple .5s ease-out;
+    pointer-events:none;
+  }
+  @keyframes ripple{ to{ transform: scale(3); opacity:0; } }
+
+  /* ===== Converter Panel ===== */
+  .conv-group{
+    background: var(--surface-alt);
+    border-radius: 16px;
+    padding: 12px;
+    display:flex; flex-direction:column; gap:10px;
+    flex-shrink: 0;
+  }
+  .conv-cats{
+    display:flex; gap:6px; overflow-x:auto; padding-bottom:2px;
+    flex-shrink: 0;
+  }
+  .conv-cat{
+    border:none; white-space:nowrap; cursor:pointer;
+    padding: 7px 13px; border-radius: 999px;
+    background: var(--surface); color:var(--text-soft);
+    font-family: var(--font-ui); font-size:.8em; font-weight:600;
+    transition:.2s;
+  }
+  .conv-cat.active{ background: var(--accent-3); color: var(--accent-3-text); }
+  .conv-row{
+    display:flex; align-items:center; gap:10px;
+  }
+  .conv-row select, .conv-row input{
+    font-family: var(--font-mono);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 11px;
+    font-size: .95em;
+    width:100%;
+    outline:none;
+  }
+  .conv-row select{ flex:1; cursor:pointer; }
+  .conv-row input{ flex:1; text-align:right; }
+
+  .conv-selectors{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .conv-selectors select{
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-mono);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 11px 8px;
+    font-size: .9em;
+    outline:none;
+    cursor:pointer;
+    text-align: center;
+    text-align-last: center;
+  }
+
+  .swap-btn{
+    border:none; background: var(--accent); color:var(--accent-text);
+    width:38px; height:38px; border-radius:12px; cursor:pointer;
+    font-size:1.05em; flex-shrink:0;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1), background .2s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .swap-btn:hover{ background: var(--accent-hover); }
+  .swap-btn:active{ transform: rotate(180deg) scale(.9); }
+  .conv-result{
+    font-family: var(--font-mono);
+    font-size: 1.4em; font-weight:600;
+    text-align:right;
+    color: var(--accent-2);
+    padding: 4px 4px;
+  }
+  .conv-hint{
+    text-align:center; font-size:.7em; color: var(--text-soft); opacity:.7;
+    flex-shrink: 0;
+  }
+
+  .conv-quick{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 2px;
+  }
+  .conv-quick-item{
+    display:flex; align-items:center; justify-content:space-between;
+    background: var(--surface-alt);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: .85em;
+  }
+  .conv-quick-item .cq-from{ color: var(--text-soft); }
+  .conv-quick-item .cq-to{ color: var(--accent-2); font-weight:600; }
+
+  /* ===== Overlay (shared by drawers & modal) ===== */
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4);
+    opacity:0; pointer-events:none; transition: opacity .3s ease;
+    z-index: 40;
+    backdrop-filter: blur(2px);
+  }
+  .overlay.show{ opacity:1; pointer-events:auto; }
+
+  /* ===== Side Drawer (History & Settings) ===== */
+  .side-drawer{
+    position:fixed;
+    top:0; right:0;
+    height:100%;
+    width: min(360px, 88vw);
+    background: var(--surface);
+    box-shadow: -10px 0 40px rgba(0,0,0,.25);
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+    padding: 20px;
+  }
+  .side-drawer.open{ transform: translateX(0); }
+  .drawer-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .drawer-header h3{ margin:0; font-weight:600; }
+  .close-btn{
+    border:none; background: var(--surface-alt); color:var(--text);
+    width:34px; height:34px; border-radius:10px; cursor:pointer; font-size:1em;
+  }
+  #historyList{
+    list-style:none; margin:0; padding:0;
+    overflow-y:auto; flex:1;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .history-section-title{
+    font-size: .68em; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    color: var(--text-soft); margin: 4px 0 2px;
+    display:flex; align-items:center; gap:5px;
+  }
+  #historyList li{
+    background: var(--surface-alt);
+    border-radius: 12px;
+    padding: 12px;
+    cursor:pointer;
+    transition: background .15s ease, transform .1s ease;
+    border: 1px solid transparent;
+    position: relative;
+    display:flex;
+    align-items:flex-start;
+    gap: 8px;
+  }
+  #historyList li:hover{ background: var(--key-hover); transform: translateX(-2px); }
+  #historyList li.pinned{ border-color: var(--accent); background: var(--surface-alt); }
+  #historyList .h-content{ flex:1; min-width:0; }
+  #historyList .h-expr{
+    font-family: var(--font-mono); font-size:.82em; color:var(--text-soft);
+    word-break: break-all;
+  }
+  #historyList .h-res{
+    font-family: var(--font-mono); font-size:1.15em; font-weight:600; color:var(--text);
+    margin-top:2px;
+  }
+  #historyList .h-time{ font-size:.68em; color:var(--text-soft); margin-top:4px; opacity:.7; }
+  .pin-btn{
+    border:none; background:transparent; cursor:pointer;
+    width:30px; height:30px; border-radius:9px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--text-soft);
+    transition: all .15s ease;
+  }
+  .pin-btn svg{ width:16px; height:16px; transition: all .15s ease; }
+  .pin-btn:hover{ background: var(--key-hover); color: var(--text); }
+  .pin-btn.pinned{ color: var(--accent); }
+  .pin-btn.pinned svg{ fill: var(--accent); }
+  .pin-btn:active{ transform: scale(.85); }
+  .empty-hint{
+    text-align:center; color:var(--text-soft); font-size:.9em; margin-top: 40px;
+  }
+  #clearHistoryBtn{
+    margin-top: 14px; border:none; border-radius:12px;
+    background: var(--danger); color: var(--danger-text);
+    padding: 12px; font-weight:600; cursor:pointer; font-family: var(--font-ui);
+    flex-shrink: 0;
+  }
+
+  /* ===== Settings Drawer content ===== */
+  .settings-section-title{
+    font-size: .72em; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    color: var(--text-soft); margin: 18px 0 8px;
+  }
+  .settings-section-title:first-of-type{ margin-top:0; }
+  .settings-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background: var(--surface-alt);
+    border-radius: 14px;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+  }
+  .settings-row-text{ display:flex; flex-direction:column; gap:2px; }
+  .settings-row-title{ font-weight:600; font-size:.92em; }
+  .settings-row-desc{ font-size:.72em; color:var(--text-soft); }
+
+  .switch{ position:relative; width:46px; height:26px; flex-shrink:0; }
+  .switch input{ opacity:0; width:0; height:0; position:absolute; }
+  .switch .slider{
+    position:absolute; inset:0; background: var(--key-bg);
+    border-radius:999px; cursor:pointer; transition:.25s ease;
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+  .switch .slider:before{
+    content:""; position:absolute; width:20px; height:20px; left:3px; top:3px;
+    background:#fff; border-radius:50%; transition:.25s ease;
+    box-shadow:0 2px 5px rgba(0,0,0,.3);
+  }
+  .switch input:checked + .slider{ background: linear-gradient(135deg,var(--accent),var(--accent-3)); box-shadow:none; }
+  .switch input:checked + .slider:before{ transform: translateX(20px); }
+
+  .settings-hint{
+    font-size: .72em; color: var(--text-soft); opacity:.8; line-height:1.5;
+    background: var(--surface-alt); border-radius: 12px; padding: 12px 14px; margin-top: 6px;
+  }
+
+  /* ===== Theme carousel (swipeable theme cards) ===== */
+  .theme-carousel{
+    display:flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .theme-carousel::-webkit-scrollbar{ height: 4px; }
+  .theme-carousel::-webkit-scrollbar-thumb{ background: var(--border); border-radius: 4px; }
+  .theme-card{
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 108px;
+    border-radius: 16px;
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: var(--surface-alt);
+    transition: all .2s ease;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .theme-card.active{
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  }
+  .theme-card:active{ transform: scale(.96); }
+  .theme-card-swatch{
+    height: 46px;
+    border-radius: 10px;
+    display:flex;
+    overflow:hidden;
+  }
+  .theme-card-swatch span{ flex:1; }
+  .theme-card-name{
+    font-size: .72em; font-weight:700; text-align:center;
+  }
+  .theme-card-check{
+    position:absolute; top:6px; right:6px;
+    width:16px; height:16px; border-radius:50%;
+    background: var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.6em; opacity:0; transform:scale(.5);
+    transition: all .2s ease;
+  }
+  .theme-card{ position:relative; }
+  .theme-card.active .theme-card-check{ opacity:1; transform:scale(1); }
+
+  /* ===== Modal Sheet (memory slot editor) ===== */
+  .modal-sheet{
+    position:fixed; left:50%; top:50%;
+    transform:translate(-50%,-50%) scale(.92);
+    width:min(320px,88vw);
+    background:var(--surface);
+    border-radius:22px;
+    padding:20px;
+    box-shadow:var(--shadow-lg);
+    z-index:55;
+    opacity:0; pointer-events:none;
+    transition: opacity .25s ease, transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .modal-sheet.show{ opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
+  .modal-sheet h3{ margin:0 0 14px; font-weight:600; font-size:1.05em; }
+  .modal-field{ margin-bottom:14px; }
+  .modal-field label{
+    font-size:.72em; color:var(--text-soft); display:block; margin-bottom:6px;
+    font-weight:700; text-transform:uppercase; letter-spacing:.4px;
+  }
+  .modal-field input{
+    width:100%; padding:11px 12px; border-radius:11px;
+    border:1px solid var(--border); background:var(--surface-alt);
+    color:var(--text); font-family:var(--font-ui); font-size:.95em; outline:none;
+  }
+  .modal-value-preview{
+    font-family:var(--font-mono); font-size:1.15em; font-weight:600;
+    color:var(--accent-2); text-align:center;
+    padding: 12px; background:var(--surface-alt); border-radius:12px; margin-bottom:14px;
+  }
+  .modal-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .modal-actions button{
+    flex:1; min-width: 40%; border:none; padding:12px; border-radius:12px;
+    font-family:var(--font-ui); font-weight:600; cursor:pointer; font-size:.82em;
+    transition: transform .1s ease, opacity .15s ease;
+  }
+  .modal-actions button:active{ transform: scale(.96); }
+  .modal-btn-save{ background: var(--accent-2); color:var(--accent-2-text); }
+  .modal-btn-clear{ background: var(--danger); color:var(--danger-text); }
+  .modal-btn-cancel{ background: var(--surface-alt); color:var(--text-soft); }
+
+  #toast{
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: .85em;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    pointer-events: none;
+    transition: all .25s ease;
+    z-index: 60;
+    max-width: 88vw;
+    text-align: center;
+  }
+  #toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: .001s !important; transition-duration: .001s !important; }
+  }
+
+  @media (max-height: 700px){
+    .top-bar{ padding: 0 4px; }
+    .brand{ font-size: .9em; }
+    .icon-btn{ width:32px; height:32px; font-size:.9em; border-radius:10px; }
+    .app{ gap: 6px; }
+  }
+  @media (max-height: 620px){
+    .top-bar{ display:none; }
+  }
+  @media (max-width:340px){
+    .mem-slot{ font-size:.9em; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="app">
+
+  <div class="top-bar">
+    <div class="brand"><span class="dot"></span> Nova Calc</div>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="icon-btn" id="settingsToggle" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+      <button class="icon-btn" id="historyToggle" title="History">🕘</button>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <!-- ================= CALCULATOR PANEL ================= -->
+    <section id="calcPanel" class="panel active">
+
+      <div class="mode-switch">
+        <button class="mode-btn active" data-mode="standard">Standard</button>
+        <button class="mode-btn" data-mode="scientific">Scientific</button>
+      </div>
+
+      <div class="calc-toolbar">
+        <div class="calc-toolbar-badges">
+          <span id="degBadge" class="badge deg-badge">DEG</span>
+          <span id="memBadge" class="badge">M</span>
+          <span id="secondBadge" class="badge">2ND</span>
+        </div>
+        <div class="calc-toolbar-tools">
+          <button class="tool-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"></path><path d="M4 9h11a5 5 0 0 1 0 10h-1"></path></svg>
+          </button>
+          <button class="tool-btn" id="redoBtn" title="Redo (Ctrl+Y)" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"></path><path d="M20 9H9a5 5 0 0 0 0 10h1"></path></svg>
+          </button>
+          <button class="tool-btn" id="copyBtn" title="Copy result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="display-wrap" id="displayWrap">
+        <div id="expression" class="expression">&nbsp;</div>
+        <div id="display" class="display">0</div>
+      </div>
+
+
+      <div class="memory-row" id="memoryRow"></div>
+
+      <div class="keypad">
+        <div id="sciGrid" class="sci-grid hidden">
+          <button class="sci-btn" id="secondToggle" data-key="2nd">2nd</button>
+          <button class="sci-btn" id="degToggle" data-key="deg">Rad</button>
+          <button class="sci-btn" data-key="pi">π</button>
+          <button class="sci-btn" data-key="e">e</button>
+
+          <button class="sci-btn" id="sinBtn" data-key="sin">sin</button>
+          <button class="sci-btn" id="cosBtn" data-key="cos">cos</button>
+          <button class="sci-btn" id="tanBtn" data-key="tan">tan</button>
+          <button class="sci-btn" data-key="fact">x!</button>
+
+          <button class="sci-btn" id="sqrtBtn" data-key="sqrt">√</button>
+          <button class="sci-btn" id="sqBtn" data-key="sq">x²</button>
+          <button class="sci-btn" data-key="pow">xʸ</button>
+          <button class="sci-btn" data-key="inv">1/x</button>
+
+          <button class="sci-btn" id="lnBtn" data-key="ln">ln</button>
+          <button class="sci-btn" id="logBtn" data-key="log">log</button>
+          <button class="sci-btn" data-key="(">(</button>
+          <button class="sci-btn" data-key=")">)</button>
+        </div>
+
+        <div class="buttons">
+          <button class="btn clear" id="clearBtn">C</button>
+          <button class="btn ghost" id="backspaceBtn">⌫</button>
+          <button class="btn ghost" data-key="%">%</button>
+          <button class="btn op" data-key="/">÷</button>
+
+          <button class="btn" data-key="7">7</button>
+          <button class="btn" data-key="8">8</button>
+          <button class="btn" data-key="9">9</button>
+          <button class="btn op" data-key="*">×</button>
+
+          <button class="btn" data-key="4">4</button>
+          <button class="btn" data-key="5">5</button>
+          <button class="btn" data-key="6">6</button>
+          <button class="btn op" data-key="-">−</button>
+
+          <button class="btn" data-key="1">1</button>
+          <button class="btn" data-key="2">2</button>
+          <button class="btn" data-key="3">3</button>
+          <button class="btn op" data-key="+">+</button>
+
+          <button class="btn ghost" id="signBtn">±</button>
+          <button class="btn" data-key="0">0</button>
+          <button class="btn" data-key=".">.</button>
+          <button class="btn ans" data-key="ans">Ans</button>
+
+          <button class="btn equal" id="equalsBtn">=</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONVERTER PANEL ================= -->
+    <section id="convertPanel" class="panel">
+      <div class="conv-cats">
+        <button class="conv-cat active" data-cat="length">Length</button>
+        <button class="conv-cat" data-cat="weight">Weight</button>
+        <button class="conv-cat" data-cat="temp">Temperature</button>
+        <button class="conv-cat" data-cat="area">Area</button>
+        <button class="conv-cat" data-cat="time">Time</button>
+      </div>
+
+      <div class="conv-group">
+        <div class="conv-row">
+          <input type="number" id="fromValue" placeholder="Enter value" value="1">
+        </div>
+
+        <div class="conv-selectors">
+          <select id="fromUnit"></select>
+          <button class="swap-btn" id="swapBtn" title="Swap units">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10h11M18 10l-3-3M18 10l-3 3"></path><path d="M17 15H6M6 15l3-3M6 15l3 3"></path></svg>
+          </button>
+          <select id="toUnit"></select>
+        </div>
+
+        <div class="conv-result" id="convResult">0</div>
+      </div>
+
+      <div class="conv-quick" id="convQuick"></div>
+
+      <div class="conv-hint">Tip: results update live as you type</div>
+    </section>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-tab active" data-tab="calcPanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="3"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="11" x2="8" y2="11"></line><line x1="12" y1="11" x2="12" y2="11"></line><line x1="16" y1="11" x2="16" y2="11"></line><line x1="8" y1="15" x2="8" y2="15"></line><line x1="12" y1="15" x2="12" y2="15"></line><line x1="16" y1="15" x2="16" y2="15"></line><line x1="8" y1="19" x2="8" y2="19"></line><line x1="12" y1="19" x2="12" y2="19"></line><line x1="16" y1="19" x2="16" y2="19"></line></svg>
+      <span class="nav-label">Calculator</span>
+    </button>
+    <button class="nav-tab" data-tab="convertPanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10h11M18 10l-3-3M18 10l-3 3"></path><path d="M17 15H6M6 15l3-3M6 15l3 3"></path></svg>
+      <span class="nav-label">Converter</span>
+    </button>
+  </nav>
+</div>
+
+<div id="toast"></div>
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-drawer" id="historyDrawer">
+  <div class="drawer-header">
+    <h3>History</h3>
+    <button class="close-btn" id="closeHistory">✕</button>
+  </div>
+  <ul id="historyList"></ul>
+  <button id="clearHistoryBtn">Clear History (keeps pinned)</button>
+</aside>
+
+<aside class="side-drawer" id="settingsDrawer">
+  <div class="drawer-header">
+    <h3>Settings</h3>
+    <button class="close-btn" id="closeSettings">✕</button>
+  </div>
+
+  <div class="settings-section-title">Theme</div>
+  <div class="theme-carousel" id="themeCarousel">
+    <div class="theme-card" data-palette="default">
+      <div class="theme-card-check">✓</div>
+      <div class="theme-card-swatch">
+        <span style="background:#F3E9DC"></span><span style="background:#E8734A"></span><span style="background:#2E8B74"></span><span style="background:#9B5DE5"></span>
+      </div>
+      <div class="theme-card-name">Mocha &amp; Amber</div>
+    </div>
+    <div class="theme-card" data-palette="sage">
+      <div class="theme-card-check">✓</div>
+      <div class="theme-card-swatch">
+        <span style="background:#E9EDE1"></span><span style="background:#B26C4C"></span><span style="background:#5C8752"></span><span style="background:#7A8B99"></span>
+      </div>
+      <div class="theme-card-name">Sage &amp; Clay</div>
+    </div>
+    <div class="theme-card" data-palette="rosewood">
+      <div class="theme-card-check">✓</div>
+      <div class="theme-card-swatch">
+        <span style="background:#F3E4E2"></span><span style="background:#B5495B"></span><span style="background:#4E8577"></span><span style="background:#A6698A"></span>
+      </div>
+      <div class="theme-card-name">Rosewood</div>
+    </div>
+    <div class="theme-card" data-palette="plum">
+      <div class="theme-card-check">✓</div>
+      <div class="theme-card-swatch">
+        <span style="background:#EAE4F0"></span><span style="background:#7B4FB0"></span><span style="background:#2E8B87"></span><span style="background:#C05C8F"></span>
+      </div>
+      <div class="theme-card-name">Midnight Plum</div>
+    </div>
+  </div>
+
+  <div class="settings-section-title">Feedback</div>
+  <div class="settings-row">
+    <div class="settings-row-text">
+      <span class="settings-row-title">Haptics</span>
+      <span class="settings-row-desc">Vibrate on key presses</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="hapticsToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="settings-row">
+    <div class="settings-row-text">
+      <span class="settings-row-title">Sound</span>
+      <span class="settings-row-desc">Play click sounds on tap</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="soundToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="settings-section-title">Gestures &amp; Shortcuts</div>
+  <div class="settings-hint">
+    ⌨️ <b>Ctrl+Z</b> / <b>Ctrl+Y</b> — Undo / Redo<br>
+    👇 Swipe <b>down</b> on the display to undo, swipe <b>up</b> to redo<br>
+    🅰️ Press <b>A</b> to insert <b>Ans</b> (last answer)<br>
+    💾 Tap an empty <b>M1–M5</b> slot to save, tap again to recall<br>
+    ✏️ Long-press a memory slot to label &amp; edit it
+  </div>
+</aside>
+
+<div class="modal-sheet" id="memoryModal">
+  <h3 id="memoryModalTitle">Edit Memory Slot</h3>
+  <div class="modal-field">
+    <label for="memoryLabelInput">Label</label>
+    <input type="text" id="memoryLabelInput" maxlength="12" placeholder="e.g. Tax Rate">
+  </div>
+  <div class="modal-value-preview" id="memoryValuePreview">Empty</div>
+  <div class="modal-actions">
+    <button class="modal-btn-save" id="memorySaveBtn">Save Current Value</button>
+    <button class="modal-btn-clear" id="memoryClearBtn">Clear Slot</button>
+    <button class="modal-btn-cancel" id="memoryCancelBtn">Cancel</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ SAFE STORAGE (works even inside sandboxed iframes) ============ */
+  const safeStorage = (function(){
+    let memoryStore = {};
+    let worksNatively = true;
+    try{
+      const testKey = "__novacalc_test__";
+      window.localStorage.setItem(testKey, "1");
+      window.localStorage.removeItem(testKey);
+    }catch(e){
+      worksNatively = false;
+    }
+    return {
+      getItem(key){
+        if(worksNatively){
+          try{ return window.localStorage.getItem(key); }
+          catch(e){ return Object.prototype.hasOwnProperty.call(memoryStore,key) ? memoryStore[key] : null; }
+        }
+        return Object.prototype.hasOwnProperty.call(memoryStore,key) ? memoryStore[key] : null;
+      },
+      setItem(key, value){
+        if(worksNatively){
+          try{ window.localStorage.setItem(key, value); return; }
+          catch(e){ /* fall through to memory */ }
+        }
+        memoryStore[key] = value;
+      }
+    };
+  })();
+
+  /* ============ STATE ============ */
+  let current = "0";
+  let expression = "";
+  let justEvaluated = false;
+  let isDegrees = true;
+  let secondMode = false;
+  let rawExpr = "";
+  let lastAnswer = 0;
+  try{ lastAnswer = parseFloat(safeStorage.getItem("novacalc_lastanswer")) || 0; }catch(e){ lastAnswer = 0; }
+
+  let history = [];
+  try{ history = JSON.parse(safeStorage.getItem("novacalc_history") || "[]"); }catch(e){ history = []; }
+
+  /* ---- Settings ---- */
+  let hapticsEnabled = true;
+  let soundEnabled = true;
+  try{
+    const h = safeStorage.getItem("novacalc_haptics");
+    const s = safeStorage.getItem("novacalc_sound");
+    if(h !== null) hapticsEnabled = h === "1";
+    if(s !== null) soundEnabled = s === "1";
+  }catch(e){ /* defaults stay true */ }
+
+  /* ---- Multi-memory slots M1-M5 ---- */
+  let memorySlots = [];
+  try{
+    const saved = JSON.parse(safeStorage.getItem("novacalc_memslots") || "null");
+    if(Array.isArray(saved) && saved.length === 5){
+      memorySlots = saved;
+    }
+  }catch(e){ /* fall through to defaults */ }
+  if(memorySlots.length !== 5){
+    memorySlots = [0,1,2,3,4].map(i => ({ label: "M" + (i+1), value: null }));
+  }
+
+  /* ---- Undo/Redo stacks ---- */
+  let undoStack = [];
+  let redoStack = [];
+
+  const displayEl = document.getElementById("display");
+  const exprEl = document.getElementById("expression");
+  const memBadge = document.getElementById("memBadge");
+  const degBadge = document.getElementById("degBadge");
+  const secondBadge = document.getElementById("secondBadge");
+  const displayWrapEl = document.getElementById("displayWrap");
+  const undoBtn = document.getElementById("undoBtn");
+  const redoBtn = document.getElementById("redoBtn");
+
+  /* ============ TOAST ============ */
+  let toastTimer = null;
+  function showToast(msg){
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toast.classList.remove("show"), 1400);
+  }
+
+  /* ============ THEME (light/dark) + PALETTE (theme carousel) ============ */
+  const themeToggle = document.getElementById("themeToggle");
+  const savedTheme = safeStorage.getItem("novacalc_theme");
+  if(savedTheme){
+    document.body.setAttribute("data-theme", savedTheme);
+  }
+
+  const savedPalette = safeStorage.getItem("novacalc_palette") || "default";
+  document.body.setAttribute("data-palette", savedPalette);
+
+  updateThemeIcon();
+
+  themeToggle.addEventListener("click", () => {
+    const cur = document.body.getAttribute("data-theme");
+    const next = cur === "dark" ? "light" : "dark";
+    document.body.setAttribute("data-theme", next);
+    safeStorage.setItem("novacalc_theme", next);
+    updateThemeIcon();
+  });
+
+  function updateThemeIcon(){
+    themeToggle.textContent = document.body.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
+  }
+
+  /* Theme carousel (swipeable palette cards in Settings) */
+  const themeCarousel = document.getElementById("themeCarousel");
+  function updateThemeCardActive(){
+    document.querySelectorAll(".theme-card").forEach(card => {
+      card.classList.toggle("active", card.dataset.palette === document.body.getAttribute("data-palette"));
+    });
+  }
+  themeCarousel.querySelectorAll(".theme-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const palette = card.dataset.palette;
+      document.body.setAttribute("data-palette", palette);
+      safeStorage.setItem("novacalc_palette", palette);
+      updateThemeCardActive();
+      vibrate();
+      playClick(600, 0.05, 0.045);
+      showToast(card.querySelector(".theme-card-name").textContent + " applied");
+    });
+  });
+  updateThemeCardActive();
+
+  /* ============ SOUND (Web Audio, gated by setting) ============ */
+  let audioCtx = null;
+  function ensureAudioCtx(){
+    if(!audioCtx){
+      try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch(e){ audioCtx = null; }
+    }
+    if(audioCtx && audioCtx.state === "suspended"){
+      try{ audioCtx.resume(); }catch(e){ /* ignore */ }
+    }
+    return audioCtx;
+  }
+  function playClick(freq, dur, vol){
+    if(!soundEnabled) return;
+    const ctx = ensureAudioCtx();
+    if(!ctx) return;
+    try{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq || 520;
+      const now = ctx.currentTime;
+      const d = dur || 0.045;
+      const v = vol || 0.045;
+      gain.gain.setValueAtTime(v, now);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + d);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + d);
+    }catch(e){ /* ignore audio errors */ }
+  }
+
+  function vibrate(){
+    if(!hapticsEnabled) return;
+    try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){ /* ignore */ }
+  }
+
+  /* ============ SETTINGS DRAWER ============ */
+  const hapticsToggleEl = document.getElementById("hapticsToggle");
+  const soundToggleEl = document.getElementById("soundToggle");
+  hapticsToggleEl.checked = hapticsEnabled;
+  soundToggleEl.checked = soundEnabled;
+
+  hapticsToggleEl.addEventListener("change", () => {
+    hapticsEnabled = hapticsToggleEl.checked;
+    safeStorage.setItem("novacalc_haptics", hapticsEnabled ? "1" : "0");
+    if(hapticsEnabled) vibrate();
+  });
+  soundToggleEl.addEventListener("change", () => {
+    soundEnabled = soundToggleEl.checked;
+    safeStorage.setItem("novacalc_sound", soundEnabled ? "1" : "0");
+    if(soundEnabled) playClick(620, 0.05, 0.05);
+  });
+
+  const settingsDrawer = document.getElementById("settingsDrawer");
+  document.getElementById("settingsToggle").addEventListener("click", openSettings);
+  document.getElementById("closeSettings").addEventListener("click", closeAllOverlays);
+
+  function openSettings(){
+    closeAllOverlays();
+    settingsDrawer.classList.add("open");
+    overlay.classList.add("show");
+  }
+
+  /* ============ TABS (bottom nav) ============ */
+  document.querySelectorAll(".nav-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    });
+  });
+
+  /* ============ MODE SWITCH (Standard/Scientific) ============ */
+  const sciGrid = document.getElementById("sciGrid");
+  document.querySelectorAll(".mode-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      if(btn.dataset.mode === "scientific"){
+        sciGrid.classList.remove("hidden");
+        degBadge.classList.add("show");
+      } else {
+        sciGrid.classList.add("hidden");
+        degBadge.classList.remove("show");
+      }
+    });
+  });
+
+  /* ============ DEG/RAD & 2ND ============ */
+  const degToggle = document.getElementById("degToggle");
+  degToggle.addEventListener("click", () => {
+    isDegrees = !isDegrees;
+    degToggle.textContent = isDegrees ? "Rad" : "Deg";
+    degBadge.textContent = isDegrees ? "DEG" : "RAD";
+  });
+
+  const secondToggle = document.getElementById("secondToggle");
+  const sinBtn = document.getElementById("sinBtn");
+  const cosBtn = document.getElementById("cosBtn");
+  const tanBtn = document.getElementById("tanBtn");
+  const sqrtBtn = document.getElementById("sqrtBtn");
+  const sqBtn = document.getElementById("sqBtn");
+  const lnBtn = document.getElementById("lnBtn");
+  const logBtn = document.getElementById("logBtn");
+
+  secondToggle.addEventListener("click", () => {
+    secondMode = !secondMode;
+    secondToggle.classList.toggle("on", secondMode);
+    secondBadge.classList.toggle("show", secondMode);
+    if(secondMode){
+      sinBtn.textContent = "sin⁻¹"; sinBtn.dataset.key = "asin";
+      cosBtn.textContent = "cos⁻¹"; cosBtn.dataset.key = "acos";
+      tanBtn.textContent = "tan⁻¹"; tanBtn.dataset.key = "atan";
+      sqrtBtn.textContent = "∛";     sqrtBtn.dataset.key = "cbrt";
+      sqBtn.textContent = "x³";     sqBtn.dataset.key = "cube";
+      lnBtn.textContent = "eˣ";     lnBtn.dataset.key = "expx";
+      logBtn.textContent = "10ˣ";   logBtn.dataset.key = "tenx";
+    } else {
+      sinBtn.textContent = "sin"; sinBtn.dataset.key = "sin";
+      cosBtn.textContent = "cos"; cosBtn.dataset.key = "cos";
+      tanBtn.textContent = "tan"; tanBtn.dataset.key = "tan";
+      sqrtBtn.textContent = "√";   sqrtBtn.dataset.key = "sqrt";
+      sqBtn.textContent = "x²";   sqBtn.dataset.key = "sq";
+      lnBtn.textContent = "ln";   lnBtn.dataset.key = "ln";
+      logBtn.textContent = "log"; logBtn.dataset.key = "log";
+    }
+  });
+
+  /* ============ DISPLAY HELPERS ============ */
+  function formatNumber(numStr){
+    if(numStr === "" || numStr === "-") return numStr;
+    let [intPart, decPart] = numStr.split(".");
+    let neg = intPart.startsWith("-");
+    if(neg) intPart = intPart.slice(1);
+    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let result = (neg ? "-" : "") + intPart + (decPart !== undefined ? "." + decPart : "");
+    return result;
+  }
+
+  function render(){
+    displayEl.textContent = formatNumber(current);
+    exprEl.textContent = expression || "\u00A0";
+    displayEl.scrollLeft = displayEl.scrollWidth;
+  }
+
+  /* ============ EXPRESSION PARSER (safe, no eval) ============ */
+  function evaluateExpression(raw){
+    let pos = 0;
+    const src = raw.replace(/\s+/g, "");
+
+    function peek(){ return src[pos]; }
+    function consume(){ return src[pos++]; }
+
+    function parseExpression(){
+      let value = parseTerm();
+      while(peek() === "+" || peek() === "-"){
+        const op = consume();
+        const rhs = parseTerm();
+        value = op === "+" ? value + rhs : value - rhs;
+      }
+      return value;
+    }
+
+    function parseTerm(){
+      let value = parseUnary();
+      while(peek() === "*" || peek() === "/"){
+        const op = consume();
+        const rhs = parseUnary();
+        if(op === "/" && rhs === 0) throw new Error("Division by zero");
+        value = op === "*" ? value * rhs : value / rhs;
+      }
+      return value;
+    }
+
+    function parseUnary(){
+      if(peek() === "-"){ consume(); return -parseUnary(); }
+      if(peek() === "+"){ consume(); return parseUnary(); }
+      return parsePower();
+    }
+
+    function parsePower(){
+      let base = parsePostfix();
+      if(peek() === "^"){
+        consume();
+        const exp = parseUnary();
+        base = Math.pow(base, exp);
+      }
+      return base;
+    }
+
+    function parsePostfix(){
+      let value = parsePrimary();
+      while(peek() === "!" || peek() === "%"){
+        const op = consume();
+        if(op === "!"){
+          if(value < 0 || !Number.isInteger(value)) throw new Error("Invalid factorial");
+          let f = 1;
+          for(let i = 2; i <= value; i++) f *= i;
+          value = f;
+        } else if(op === "%"){
+          value = value / 100;
+        }
+      }
+      return value;
+    }
+
+    const funcs = {
+      sin: v => Math.sin(isDegrees ? v * Math.PI/180 : v),
+      cos: v => Math.cos(isDegrees ? v * Math.PI/180 : v),
+      tan: v => Math.tan(isDegrees ? v * Math.PI/180 : v),
+      asin: v => { const r = Math.asin(v); return isDegrees ? r * 180/Math.PI : r; },
+      acos: v => { const r = Math.acos(v); return isDegrees ? r * 180/Math.PI : r; },
+      atan: v => { const r = Math.atan(v); return isDegrees ? r * 180/Math.PI : r; },
+      sqrt: v => { if(v < 0) throw new Error("Invalid sqrt"); return Math.sqrt(v); },
+      cbrt: v => Math.cbrt(v),
+      ln: v => { if(v <= 0) throw new Error("Invalid ln"); return Math.log(v); },
+      log: v => { if(v <= 0) throw new Error("Invalid log"); return Math.log10(v); }
+    };
+
+    function parsePrimary(){
+      if(peek() === "("){
+        consume();
+        const value = parseExpression();
+        if(peek() !== ")") throw new Error("Missing )");
+        consume();
+        return value;
+      }
+
+      // Ans (last answer)
+      if(src.slice(pos, pos+3) === "ans"){ pos += 3; return lastAnswer; }
+
+      // constants pi / e
+      if(src.slice(pos, pos+2) === "pi"){ pos += 2; return Math.PI; }
+      if(peek() === "e" && !/[a-zA-Z]/.test(src[pos+1] || "")){ pos += 1; return Math.E; }
+
+      // function names
+      for(const name of Object.keys(funcs)){
+        if(src.slice(pos, pos+name.length) === name){
+          pos += name.length;
+          if(peek() !== "(") throw new Error("Expected (");
+          consume();
+          const arg = parseExpression();
+          if(peek() !== ")") throw new Error("Missing )");
+          consume();
+          return funcs[name](arg);
+        }
+      }
+
+      // number
+      let start = pos;
+      while(/[0-9.]/.test(peek() || "")) pos++;
+      if(pos === start) throw new Error("Unexpected token: " + peek());
+      const numStr = src.slice(start, pos);
+      if(numStr === "." || numStr.split(".").length > 2) throw new Error("Bad number");
+      return parseFloat(numStr);
+    }
+
+    const result = parseExpression();
+    if(pos !== src.length) throw new Error("Unexpected token at end");
+    if(!isFinite(result)) throw new Error("Math error");
+    return result;
+  }
+
+  /* ============ UNDO / REDO ============ */
+  function snapshotState(){
+    return { current, expression, rawExpr, justEvaluated };
+  }
+  function restoreState(state){
+    current = state.current;
+    expression = state.expression;
+    rawExpr = state.rawExpr;
+    justEvaluated = state.justEvaluated;
+  }
+  function pushUndo(){
+    undoStack.push(snapshotState());
+    if(undoStack.length > 100) undoStack.shift();
+    redoStack = [];
+    updateUndoRedoButtons();
+  }
+  function undo(){
+    if(undoStack.length === 0){ showToast("Nothing to undo"); return; }
+    redoStack.push(snapshotState());
+    const prev = undoStack.pop();
+    restoreState(prev);
+    render();
+    updateUndoRedoButtons();
+    showToast("Undone");
+  }
+  function redo(){
+    if(redoStack.length === 0){ showToast("Nothing to redo"); return; }
+    undoStack.push(snapshotState());
+    const next = redoStack.pop();
+    restoreState(next);
+    render();
+    updateUndoRedoButtons();
+    showToast("Redone");
+  }
+  function updateUndoRedoButtons(){
+    undoBtn.disabled = undoStack.length === 0;
+    redoBtn.disabled = redoStack.length === 0;
+  }
+  undoBtn.addEventListener("click", () => { vibrate(); undo(); });
+  redoBtn.addEventListener("click", () => { vibrate(); redo(); });
+
+  /* swipe gesture: swipe down = undo, swipe up = redo */
+  let touchStartY = null;
+  displayWrapEl.addEventListener("touchstart", (e) => {
+    if(e.touches && e.touches.length === 1){ touchStartY = e.touches[0].clientY; }
+  }, { passive: true });
+  displayWrapEl.addEventListener("touchend", (e) => {
+    if(touchStartY === null) return;
+    const endY = (e.changedTouches && e.changedTouches[0].clientY) || touchStartY;
+    const deltaY = endY - touchStartY;
+    touchStartY = null;
+    const threshold = 35;
+    if(deltaY > threshold) undo();
+    else if(deltaY < -threshold) redo();
+  }, { passive: true });
+
+  /* ============ MEMORY BADGE ============ */
+  function updateMemBadge(){
+    const filled = memorySlots.filter(s => s.value !== null).length;
+    if(filled > 0){
+      memBadge.textContent = "M·" + filled;
+      memBadge.classList.add("show");
+    } else {
+      memBadge.classList.remove("show");
+    }
+  }
+
+  /* ============ INPUT HANDLING ============ */
+  function inputDigit(d){
+    if(justEvaluated){ current = "0"; expression = ""; rawExpr = ""; justEvaluated = false; }
+    if(current === "0" && d !== ".") current = d;
+    else if(d === "." && current.includes(".")) return;
+    else current += d;
+    render();
+  }
+
+  function inputOperator(op){
+    justEvaluated = false;
+    const symbolMap = { "+":"+", "-":"−", "*":"×", "/":"÷" };
+    expression += formatNumber(current) + " " + symbolMap[op] + " ";
+    rawExpr += current + op;
+    current = "0";
+    render();
+  }
+
+  function inputFunction(fnToken){
+    justEvaluated = false;
+    const map = {
+      sin:"sin(", cos:"cos(", tan:"tan(",
+      asin:"asin(", acos:"acos(", atan:"atan(",
+      sqrt:"sqrt(", cbrt:"cbrt(",
+      ln:"ln(", log:"log(",
+      expx:"e^(", tenx:"10^("
+    };
+    if(map[fnToken]){
+      rawExpr += map[fnToken];
+      expression += fnToken + "(";
+      current = "0";
+    } else if(fnToken === "pi"){
+      if(justEvaluated){ current = "0"; expression = ""; rawExpr = ""; justEvaluated = false; }
+      expression += "π";
+      current = formatResult(Math.PI);
+    } else if(fnToken === "e"){
+      if(justEvaluated){ current = "0"; expression = ""; rawExpr = ""; justEvaluated = false; }
+      expression += "e";
+      current = formatResult(Math.E);
+    } else if(fnToken === "ans"){
+      if(justEvaluated){ current = "0"; expression = ""; rawExpr = ""; justEvaluated = false; }
+      expression += "Ans";
+      current = formatResult(lastAnswer);
+    } else if(fnToken === "sq"){
+      expression = (expression || "") + formatNumber(current) + "²";
+      rawExpr += current; rawExpr += "^2";
+      current = doQuickEval(rawExpr);
+      expression += " =";
+      finalizeQuickResult(current);
+    } else if(fnToken === "cube"){
+      expression = (expression || "") + formatNumber(current) + "³";
+      rawExpr += current; rawExpr += "^3";
+      current = doQuickEval(rawExpr);
+      expression += " =";
+      finalizeQuickResult(current);
+    } else if(fnToken === "pow"){
+      rawExpr += current;
+      rawExpr += "^";
+      expression += formatNumber(current) + "^";
+      current = "0";
+    } else if(fnToken === "inv"){
+      expression = (expression || "") + "1/(" + formatNumber(current) + ")";
+      rawExpr = "1/(" + rawExpr + current + ")";
+      current = doQuickEval(rawExpr);
+      expression += " =";
+      finalizeQuickResult(current);
+    } else if(fnToken === "fact"){
+      expression = (expression || "") + formatNumber(current) + "!";
+      rawExpr += current; rawExpr += "!";
+      current = doQuickEval(rawExpr);
+      expression += " =";
+      finalizeQuickResult(current);
+    } else if(fnToken === "("){
+      rawExpr += "(";
+      expression += "(";
+    } else if(fnToken === ")"){
+      rawExpr += ")";
+      expression += ")";
+    }
+    render();
+  }
+
+  function doQuickEval(str){
+    try{
+      const r = evaluateExpression(str);
+      // the whole accumulated raw expression has now collapsed into a single
+      // value which will live in `current` — rawExpr must be reset to empty,
+      // NOT to the result, otherwise the next operator would double-count it.
+      rawExpr = "";
+      return formatResult(r);
+    }catch(e){
+      return current;
+    }
+  }
+
+  // Marks a "quick" single-value operation (x², x³, 1/x, x!) as a completed
+  // calculation, just like pressing "=" — updates Ans and lets the next
+  // digit/operator start fresh instead of appending to this result.
+  function finalizeQuickResult(resultStr){
+    justEvaluated = true;
+    const numeric = parseFloat(resultStr);
+    if(!isNaN(numeric)){
+      lastAnswer = numeric;
+      try{ safeStorage.setItem("novacalc_lastanswer", String(numeric)); }catch(e){ /* ignore */ }
+    }
+  }
+
+  function clearAll(){
+    current = "0"; expression = ""; rawExpr = ""; justEvaluated = false;
+    render();
+  }
+
+  function backspace(){
+    if(justEvaluated){ clearAll(); return; }
+    if(current.length > 1) current = current.slice(0, -1);
+    else current = "0";
+    render();
+  }
+
+  function toggleSign(){
+    if(current === "0") return;
+    current = current.startsWith("-") ? current.slice(1) : "-" + current;
+    render();
+  }
+
+  function calculate(){
+    const fullRaw = rawExpr + current;
+    const fullExprDisplay = expression + formatNumber(current);
+    try{
+      const result = evaluateExpression(fullRaw);
+      const resultStr = formatResult(result);
+      addHistory(fullExprDisplay, resultStr);
+      current = resultStr;
+      expression = fullExprDisplay + " =";
+      rawExpr = "";
+      justEvaluated = true;
+      lastAnswer = result;
+      try{ safeStorage.setItem("novacalc_lastanswer", String(result)); }catch(e){ /* ignore */ }
+    }catch(err){
+      displayEl.textContent = "Error";
+      exprEl.textContent = err.message || "Invalid expression";
+      current = "0"; rawExpr = ""; expression = "";
+      shakeDisplay();
+      return;
+    }
+    render();
+  }
+
+  function formatResult(num){
+    if(Number.isInteger(num)) return String(num);
+    let s = num.toFixed(10).replace(/0+$/,"").replace(/\.$/,"");
+    if(Math.abs(num) < 1e-9) s = "0";
+    return s;
+  }
+
+  function shakeDisplay(){
+    const wrap = document.querySelector(".display-wrap");
+    try{
+      wrap.animate([
+        { transform: "translateX(0)" },
+        { transform: "translateX(-6px)" },
+        { transform: "translateX(6px)" },
+        { transform: "translateX(0)" }
+      ], { duration: 250 });
+    }catch(e){ /* animate API unsupported, ignore */ }
+  }
+
+  /* ============ MULTI-MEMORY SLOTS (M1-M5) ============ */
+  const memoryRow = document.getElementById("memoryRow");
+  let longPressTimer = null;
+  let longPressFired = false;
+  let activeSlotIndex = null;
+
+  function persistMemorySlots(){
+    try{ safeStorage.setItem("novacalc_memslots", JSON.stringify(memorySlots)); }catch(e){ /* ignore */ }
+  }
+
+  function renderMemorySlots(){
+    memoryRow.innerHTML = "";
+    memorySlots.forEach((slot, i) => {
+      const btn = document.createElement("button");
+      btn.className = "mem-slot" + (slot.value !== null ? " filled" : "");
+      btn.dataset.slot = String(i);
+
+      const labelSpan = document.createElement("span");
+      labelSpan.className = "mem-slot-label";
+      labelSpan.textContent = slot.label;
+
+      const valueSpan = document.createElement("span");
+      valueSpan.className = "mem-slot-value";
+      valueSpan.textContent = slot.value !== null ? formatNumber(formatResult(slot.value)) : "empty";
+
+      btn.appendChild(labelSpan);
+      btn.appendChild(valueSpan);
+
+      btn.addEventListener("pointerdown", (e) => {
+        longPressFired = false;
+        activeSlotIndex = i;
+        longPressTimer = setTimeout(() => {
+          longPressFired = true;
+          vibrate();
+          openMemoryModal(i);
+        }, 500);
+      });
+      const cancelPress = () => { clearTimeout(longPressTimer); };
+      btn.addEventListener("pointerup", (e) => {
+        cancelPress();
+        if(!longPressFired){
+          handleSlotTap(i);
+        }
+      });
+      btn.addEventListener("pointerleave", cancelPress);
+      btn.addEventListener("pointercancel", cancelPress);
+
+      memoryRow.appendChild(btn);
+    });
+    updateMemBadge();
+  }
+
+  function handleSlotTap(i){
+    const slot = memorySlots[i];
+    vibrate();
+    playClick(560, 0.05, 0.045);
+    if(slot.value !== null){
+      pushUndo();
+      current = formatResult(slot.value);
+      justEvaluated = true;
+      render();
+      showToast("Recalled " + slot.label);
+    } else {
+      const val = parseFloat(current.replace(/,/g,"")) || 0;
+      slot.value = val;
+      persistMemorySlots();
+      renderMemorySlots();
+      showToast("Saved to " + slot.label);
+    }
+  }
+
+  const memoryModal = document.getElementById("memoryModal");
+  const memoryModalTitle = document.getElementById("memoryModalTitle");
+  const memoryLabelInput = document.getElementById("memoryLabelInput");
+  const memoryValuePreview = document.getElementById("memoryValuePreview");
+
+  function openMemoryModal(i){
+    activeSlotIndex = i;
+    const slot = memorySlots[i];
+    memoryModalTitle.textContent = "Edit " + slot.label;
+    memoryLabelInput.value = slot.label;
+    memoryValuePreview.textContent = slot.value !== null ? formatNumber(formatResult(slot.value)) : "Empty";
+    closeAllOverlays();
+    memoryModal.classList.add("show");
+    overlay.classList.add("show");
+  }
+
+  document.getElementById("memorySaveBtn").addEventListener("click", () => {
+    if(activeSlotIndex === null) return;
+    const slot = memorySlots[activeSlotIndex];
+    const newLabel = memoryLabelInput.value.trim();
+    slot.label = newLabel || ("M" + (activeSlotIndex + 1));
+    const val = parseFloat(current.replace(/,/g,"")) || 0;
+    slot.value = val;
+    persistMemorySlots();
+    renderMemorySlots();
+    closeAllOverlays();
+    showToast("Saved to " + slot.label);
+  });
+
+  document.getElementById("memoryClearBtn").addEventListener("click", () => {
+    if(activeSlotIndex === null) return;
+    const slot = memorySlots[activeSlotIndex];
+    slot.value = null;
+    slot.label = "M" + (activeSlotIndex + 1);
+    persistMemorySlots();
+    renderMemorySlots();
+    closeAllOverlays();
+    showToast("Slot cleared");
+  });
+
+  document.getElementById("memoryCancelBtn").addEventListener("click", closeAllOverlays);
+
+  renderMemorySlots();
+
+  /* ============ BUTTON WIRING ============ */
+  document.querySelectorAll("[data-key]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      pushUndo();
+      spawnRipple(e, btn);
+      vibrate();
+      const key = btn.dataset.key;
+      if(/^[0-9.]$/.test(key)){ playClick(500, 0.035, 0.04); inputDigit(key); }
+      else if(["+","-","*","/"].includes(key)){ playClick(430, 0.045, 0.045); inputOperator(key); }
+      else if(key === "%"){ playClick(460, 0.04, 0.04); rawExpr += current + "%"; current = doQuickEval(rawExpr); render(); }
+      else { playClick(560, 0.04, 0.04); inputFunction(key); }
+    });
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", (e)=>{ pushUndo(); spawnRipple(e); vibrate(); playClick(300, 0.06, 0.05); clearAll(); });
+  document.getElementById("backspaceBtn").addEventListener("click", (e)=>{ pushUndo(); spawnRipple(e); vibrate(); playClick(380, 0.04, 0.04); backspace(); });
+  document.getElementById("signBtn").addEventListener("click", (e)=>{ pushUndo(); spawnRipple(e); vibrate(); playClick(460, 0.04, 0.04); toggleSign(); });
+  document.getElementById("equalsBtn").addEventListener("click", (e)=>{ pushUndo(); spawnRipple(e); vibrate(); playClick(760, 0.07, 0.05); calculate(); });
+
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const text = current.replace(/,/g,"");
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(()=>{
+          showToast("Copied " + text);
+        }).catch(()=> fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }catch(e){
+      fallbackCopy(text);
+    }
+  });
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showToast("Copied " + text);
+    }catch(e){
+      showToast("Copy not available");
+    }
+  }
+
+  function spawnRipple(e, target){
+    const el = target || e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + "px";
+    const x = (e.clientX || rect.left + rect.width/2) - rect.left - size/2;
+    const y = (e.clientY || rect.top + rect.height/2) - rect.top - size/2;
+    ripple.style.left = x + "px";
+    ripple.style.top = y + "px";
+    el.appendChild(ripple);
+    setTimeout(()=> ripple.remove(), 500);
+  }
+
+  /* ============ HISTORY & SETTINGS DRAWERS (shared overlay) ============ */
+  const historyDrawer = document.getElementById("historyDrawer");
+  const overlay = document.getElementById("overlay");
+  const historyList = document.getElementById("historyList");
+
+  document.getElementById("historyToggle").addEventListener("click", openHistory);
+  document.getElementById("closeHistory").addEventListener("click", closeAllOverlays);
+  overlay.addEventListener("click", closeAllOverlays);
+  document.getElementById("clearHistoryBtn").addEventListener("click", () => {
+    const pinnedCount = history.filter(h => h.pinned).length;
+    history = history.filter(h => h.pinned);
+    persistHistory();
+    renderHistory();
+    showToast(pinnedCount > 0 ? ("Cleared (" + pinnedCount + " pinned kept)") : "History cleared");
+  });
+
+  function openHistory(){
+    closeAllOverlays();
+    historyDrawer.classList.add("open");
+    overlay.classList.add("show");
+  }
+  function closeAllOverlays(){
+    historyDrawer.classList.remove("open");
+    settingsDrawer.classList.remove("open");
+    memoryModal.classList.remove("show");
+    overlay.classList.remove("show");
+  }
+
+  let historyIdCounter = 1;
+  try{
+    const savedCounter = parseInt(safeStorage.getItem("novacalc_history_idc"), 10);
+    if(!isNaN(savedCounter)) historyIdCounter = savedCounter;
+  }catch(e){ /* keep default */ }
+  // ensure existing loaded entries have ids (migration for older saved history)
+  history.forEach(item => {
+    if(item.id === undefined){ item.id = historyIdCounter++; }
+    if(item.pinned === undefined){ item.pinned = false; }
+  });
+
+  function addHistory(expr, result){
+    const entry = { id: historyIdCounter++, expr, result, time: new Date().toLocaleString(), pinned: false };
+    history.unshift(entry);
+    // the 50-item cap only trims UNPINNED entries, so starred results are never pushed out
+    const unpinnedCount = history.filter(h => !h.pinned).length;
+    if(unpinnedCount > 50){
+      for(let i = history.length - 1; i >= 0 && history.filter(h => !h.pinned).length > 50; i--){
+        if(!history[i].pinned){ history.splice(i, 1); }
+      }
+    }
+    persistHistory();
+    renderHistory();
+  }
+
+  function persistHistory(){
+    try{
+      safeStorage.setItem("novacalc_history", JSON.stringify(history));
+      safeStorage.setItem("novacalc_history_idc", String(historyIdCounter));
+    }catch(e){ /* ignore */ }
+  }
+
+  function togglePin(id){
+    const item = history.find(h => h.id === id);
+    if(!item) return;
+    item.pinned = !item.pinned;
+    persistHistory();
+    renderHistory();
+    showToast(item.pinned ? "Pinned" : "Unpinned");
+  }
+
+  function buildHistoryItem(item){
+    const li = document.createElement("li");
+    if(item.pinned) li.classList.add("pinned");
+
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "h-content";
+    const exprDiv = document.createElement("div");
+    exprDiv.className = "h-expr";
+    exprDiv.textContent = item.expr;
+    const resDiv = document.createElement("div");
+    resDiv.className = "h-res";
+    resDiv.textContent = formatNumber(item.result);
+    const timeDiv = document.createElement("div");
+    timeDiv.className = "h-time";
+    timeDiv.textContent = item.time;
+    contentDiv.appendChild(exprDiv);
+    contentDiv.appendChild(resDiv);
+    contentDiv.appendChild(timeDiv);
+
+    const pinBtn = document.createElement("button");
+    pinBtn.className = "pin-btn" + (item.pinned ? " pinned" : "");
+    pinBtn.title = item.pinned ? "Unpin" : "Pin this result";
+    pinBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (item.pinned ? "currentColor" : "none") + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>';
+    pinBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      vibrate();
+      togglePin(item.id);
+    });
+
+    li.appendChild(contentDiv);
+    li.appendChild(pinBtn);
+
+    li.addEventListener("click", () => {
+      pushUndo();
+      current = item.result;
+      rawExpr = "";
+      expression = "";
+      justEvaluated = true;
+      render();
+      closeAllOverlays();
+    });
+    return li;
+  }
+
+  function renderHistory(){
+    historyList.innerHTML = "";
+    if(history.length === 0){
+      historyList.innerHTML = '<div class="empty-hint">No calculations yet ✨</div>';
+      return;
+    }
+    const pinned = history.filter(h => h.pinned);
+    const unpinned = history.filter(h => !h.pinned);
+
+    if(pinned.length > 0){
+      const title = document.createElement("div");
+      title.className = "history-section-title";
+      title.textContent = "📌 Pinned";
+      historyList.appendChild(title);
+      pinned.forEach(item => historyList.appendChild(buildHistoryItem(item)));
+
+      if(unpinned.length > 0){
+        const title2 = document.createElement("div");
+        title2.className = "history-section-title";
+        title2.textContent = "Recent";
+        title2.style.marginTop = "10px";
+        historyList.appendChild(title2);
+      }
+    }
+    unpinned.forEach(item => historyList.appendChild(buildHistoryItem(item)));
+  }
+  renderHistory();
+  updateMemBadge();
+  updateUndoRedoButtons();
+
+  /* ============ KEYBOARD SUPPORT ============ */
+  window.addEventListener("keydown", (e) => {
+    if(!document.getElementById("calcPanel").classList.contains("active")) return;
+    const k = e.key;
+
+    if((e.ctrlKey || e.metaKey) && !e.shiftKey && k.toLowerCase() === "z"){
+      e.preventDefault(); undo(); return;
+    }
+    if(((e.ctrlKey || e.metaKey) && e.shiftKey && k.toLowerCase() === "z") || ((e.ctrlKey || e.metaKey) && k.toLowerCase() === "y")){
+      e.preventDefault(); redo(); return;
+    }
+    if(!e.ctrlKey && !e.metaKey && k.toLowerCase() === "a"){
+      pushUndo(); inputFunction("ans"); return;
+    }
+
+    if(/^[0-9.]$/.test(k)){ pushUndo(); inputDigit(k); }
+    else if(["+","-","*","/"].includes(k)){ pushUndo(); inputOperator(k); }
+    else if(k === "Enter" || k === "="){ e.preventDefault(); pushUndo(); calculate(); }
+    else if(k === "Backspace"){ pushUndo(); backspace(); }
+    else if(k === "Escape"){ pushUndo(); clearAll(); }
+    else if(k === "%"){ pushUndo(); rawExpr += current + "%"; current = doQuickEval(rawExpr); render(); }
+    else if(k === "(" || k === ")"){ pushUndo(); inputFunction(k); }
+  });
+
+  /* ============ CONVERTER ============ */
+  const units = {
+    length: {
+      factors: { mm:0.001, cm:0.01, m:1, km:1000, in:0.0254, ft:0.3048, yd:0.9144, mi:1609.344 }
+    },
+    weight: {
+      factors: { mg:0.000001, g:0.001, kg:1, t:1000, oz:0.0283495, lb:0.453592, st:6.35029 }
+    },
+    area: {
+      factors: { sqmm:0.000001, sqcm:0.0001, sqm:1, ha:10000, sqkm:1000000, sqft:0.092903, sqyd:0.836127, acre:4046.86 }
+    },
+    time: {
+      factors: { ms:0.001, s:1, min:60, hr:3600, day:86400, week:604800, month:2629800, year:31557600 }
+    }
+  };
+
+  const catBar = document.querySelectorAll(".conv-cat");
+  const fromUnitSel = document.getElementById("fromUnit");
+  const toUnitSel = document.getElementById("toUnit");
+  const fromValueInput = document.getElementById("fromValue");
+  const convResultEl = document.getElementById("convResult");
+  let currentCat = "length";
+
+  function populateUnits(cat){
+    fromUnitSel.innerHTML = "";
+    toUnitSel.innerHTML = "";
+    if(cat === "temp"){
+      ["Celsius","Fahrenheit","Kelvin"].forEach(u => {
+        fromUnitSel.add(new Option(u, u));
+        toUnitSel.add(new Option(u, u));
+      });
+      toUnitSel.selectedIndex = 1;
+      return;
+    }
+    const list = Object.keys(units[cat].factors);
+    list.forEach(u => {
+      fromUnitSel.add(new Option(u, u));
+      toUnitSel.add(new Option(u, u));
+    });
+    toUnitSel.selectedIndex = 1;
+  }
+
+  function convertTemp(value, from, to){
+    let celsius;
+    if(from === "Celsius") celsius = value;
+    else if(from === "Fahrenheit") celsius = (value - 32) * 5/9;
+    else celsius = value - 273.15;
+
+    if(to === "Celsius") return celsius;
+    if(to === "Fahrenheit") return celsius * 9/5 + 32;
+    return celsius + 273.15;
+  }
+
+  function doConversion(){
+    const val = parseFloat(fromValueInput.value);
+    if(isNaN(val)){ convResultEl.textContent = "—"; }
+    else{
+      let result;
+      if(currentCat === "temp"){
+        result = convertTemp(val, fromUnitSel.value, toUnitSel.value);
+      } else {
+        const f = units[currentCat].factors;
+        const baseVal = val * f[fromUnitSel.value];
+        result = baseVal / f[toUnitSel.value];
+      }
+      convResultEl.textContent = formatNumber(formatResult(result)) + " " + toUnitSel.value;
+    }
+    renderQuickReference();
+  }
+
+  const convQuickEl = document.getElementById("convQuick");
+  function renderQuickReference(){
+    convQuickEl.innerHTML = "";
+    const from = fromUnitSel.value;
+    if(!from) return;
+    let targetUnits;
+    if(currentCat === "temp"){
+      targetUnits = ["Celsius","Fahrenheit","Kelvin"].filter(u => u !== from);
+    } else {
+      targetUnits = Object.keys(units[currentCat].factors).filter(u => u !== from);
+    }
+    const refVal = 1;
+    targetUnits.forEach(u => {
+      let result;
+      if(currentCat === "temp"){
+        result = convertTemp(refVal, from, u);
+      } else {
+        const f = units[currentCat].factors;
+        result = (refVal * f[from]) / f[u];
+      }
+      const row = document.createElement("div");
+      row.className = "conv-quick-item";
+      const left = document.createElement("span");
+      left.className = "cq-from";
+      left.textContent = "1 " + from + " =";
+      const right = document.createElement("span");
+      right.className = "cq-to";
+      right.textContent = formatNumber(formatResult(result)) + " " + u;
+      row.appendChild(left);
+      row.appendChild(right);
+      convQuickEl.appendChild(row);
+    });
+  }
+
+  catBar.forEach(btn => {
+    btn.addEventListener("click", () => {
+      catBar.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentCat = btn.dataset.cat;
+      populateUnits(currentCat);
+      doConversion();
+    });
+  });
+
+  document.getElementById("swapBtn").addEventListener("click", () => {
+    const tmp = fromUnitSel.value;
+    fromUnitSel.value = toUnitSel.value;
+    toUnitSel.value = tmp;
+    doConversion();
+  });
+
+  fromValueInput.addEventListener("input", doConversion);
+  fromUnitSel.addEventListener("change", doConversion);
+  toUnitSel.addEventListener("change", doConversion);
+
+  populateUnits(currentCat);
+  doConversion();
+
+  render();
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16626344a207f71',t:'MTc4MzI1MjE5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
